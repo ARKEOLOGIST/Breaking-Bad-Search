@@ -1,19 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './characterCard.css';
 
 function CharacterCard(props) {
+    const { character } = props.location.state;
+    const [ quotes, setQuotes ] = useState([]);
+
+    useEffect(async () => {
+        let url = `https://www.breakingbadapi.com/api/quote?author=${character.name}`;
+        
+        try {
+            const res = await fetch(url);
+            const data = await res.json(); 
+            setQuotes(data);
+        } catch(err) {
+            console.log(err);
+        }
+    },[]);
+
     return (
         <div className="card">
-                <img className="card--image" src={props.character.img}
-                    alt={props.character.name}/>
+                <img className="card--image" src={character.img}
+                    alt={character.name}/>
                 <div className="card--content">
-                    <h2 className="card--title">{props.character.name}</h2>
-                    <h3>{props.character.nickname}</h3>
-                    <p><small>DATE OF BIRTH: {props.character.birthday}</small></p>
-                    <p><small>OCCUPATION: {props.character.occupation.toString()}</small></p>
-                    <p><small>STATUS: {props.character.status}</small></p>
-                    <p><small>SEASONS: {props.character.appearance?props.character.appearance.toString():null}</small></p>
-                    <p><small>PORTRAYED BY: {props.character.portrayed}</small></p>
+                    <h2 className="card--title">{character.name}</h2>
+                    <h3>{character.nickname}</h3>
+                    <h4>{character.id}</h4>
+                    <p><small>DATE OF BIRTH: {character.birthday}</small></p>
+                    <p><small>OCCUPATION: {character.occupation.toString()}</small></p>
+                    <p><small>STATUS: {character.status}</small></p>
+                    <p><small>SEASONS: {character.appearance?character.appearance.toString():null}</small></p>
+                    <p><small>PORTRAYED BY: {character.portrayed}</small></p>
+                    {quotes?quotes.map((quote) => {
+                        return <h3>{quote.quote}</h3>
+                    }):null}
                 </div>
         </div>
     );

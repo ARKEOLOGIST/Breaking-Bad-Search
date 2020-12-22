@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './searchChars.css';
-//import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //import CharacterCard from './characterCard';
 
 function SearchChars() {
     const [ query, setQuery ] = useState('');
     const [ characters, setChars ] = useState([]);
     const [ loading, setLoading ] = useState(false);
+
+    /*useEffect(async () => {
+        let url = `https://www.breakingbadapi.com/api/characters`;
+        
+        try {
+            const res = await fetch(url);
+            const data = await res.json(); 
+            setChars(data);
+        } catch(err) {
+            console.log(err);
+        }
+    },[]);*/
 
     const searchCharacters = async (e) => {
         e.preventDefault();
@@ -37,14 +49,14 @@ function SearchChars() {
                 <button className="button" type="submit">Search</button>
             </form>
             <br/>
-            <div className="loader" style={{ display: loading? 'block' : 'none', marginTop: '90px'}}>
+            <div className="loader" style={{ display: loading? 'block' : 'none', marginTop: '90px', marginBottom: '90px'}}>
                 <div className="loading">
                     Loading...
                 </div>
             </div>
             <div className="card-list">
                 {characters.map(character => (
-                        <img className="element" src={character.img} alt={character.name}></img>
+                        <Link key={character.char_id} to={{ pathname: `/${character.name}`,state: {character: character}}}><img className="element" src={character.img} alt={character.name}></img></Link>
                 ))}
             </div>
         </div>

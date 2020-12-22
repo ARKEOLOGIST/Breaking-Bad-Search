@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './characterCard.css';
 
 function CharacterCard(props) {
     const { character } = props.location.state;
     const [ quotes, setQuotes ] = useState([]);
 
-    useEffect(async () => {
+    useEffect(() => {
+        async function APICall() 
+        {
         let url = `https://www.breakingbadapi.com/api/quote?author=${character.name}`;
         
         try {
@@ -15,7 +18,9 @@ function CharacterCard(props) {
         } catch(err) {
             console.log(err);
         }
-    },[]);
+    }
+    APICall();
+    },[character]);
 
     return (
         <div className="card">
@@ -30,9 +35,12 @@ function CharacterCard(props) {
                     <p><small>STATUS: {character.status}</small></p>
                     <p><small>SEASONS: {character.appearance?character.appearance.toString():null}</small></p>
                     <p><small>PORTRAYED BY: {character.portrayed}</small></p>
-                    {quotes?quotes.map((quote) => {
+                    {console.log(quotes)}
+                    {quotes.length>0?<h2>QUOTES:</h2>:null}
+                    {quotes.length>0?quotes.map((quote) => {
                         return <h3>{quote.quote}</h3>
                     }):null}
+                    <div className="hyperlink"><Link to={{pathname: `/`}}><h2>RETURN TO MAIN SCREEN</h2></Link></div>
                 </div>
         </div>
     );

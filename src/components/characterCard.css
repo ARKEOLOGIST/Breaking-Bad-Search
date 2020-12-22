@@ -22,3 +22,14 @@
     width: 30%;
     height: 30%;
 }
+
+.hyperlink {
+    padding: 10px 0;
+    background-color: rgb(33,53,18);
+}
+
+a:link,a:visited,a:link,a:active {
+    color: white;
+    text-decoration: none;
+  }
+  

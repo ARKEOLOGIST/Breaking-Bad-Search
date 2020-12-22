@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import './searchChars.css';
-import CharacterCard from './characterCard';
+//import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+//import CharacterCard from './characterCard';
 
 function SearchChars() {
     const [ query, setQuery ] = useState('');
     const [ characters, setChars ] = useState([]);
+    const [ loading, setLoading ] = useState(false);
 
     const searchCharacters = async (e) => {
         e.preventDefault();
+        setLoading(true);
         let url = `https://www.breakingbadapi.com/api/characters?name=${query}`;
-        if (query == '')
+        if (query === '')
         {
             url = `https://www.breakingbadapi.com/api/characters`;
         }
@@ -19,8 +22,8 @@ function SearchChars() {
         try {
             const res = await fetch(url);
             const data = await res.json();
-            console.log(data);
-            setChars(data);
+            setLoading(false);
+            setChars(data);    
         } catch(err) {
             console.log(err);
         }
@@ -34,9 +37,14 @@ function SearchChars() {
                 <button className="button" type="submit">Search</button>
             </form>
             <br/>
+            <div className="loader" style={{ display: loading? 'block' : 'none', marginTop: '90px'}}>
+                <div className="loading">
+                    Loading...
+                </div>
+            </div>
             <div className="card-list">
                 {characters.map(character => (
-                    <CharacterCard character={character} key={character.id}/>
+                        <img className="element" src={character.img} alt={character.name}></img>
                 ))}
             </div>
         </div>

@@ -7,6 +7,13 @@
     margin-bottom: 0.2rem;
     text-transform: uppercase;
   }
+
+  .loading {
+    color: white;
+    text-transform: uppercase;
+    font-size: 2rem;
+  }
+
   
   .input {
     font-size: 1.6rem;
@@ -15,6 +22,12 @@
     border-radius: 20px;
     border: 1px solid #ddd;
     margin-bottom: 1rem;
+  }
+
+  .element {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
   }
 
   .input:focus {
@@ -30,6 +43,12 @@
     font-size: 1.4rem;
     cursor: pointer;
     transition: background-color 250ms;
+  }
+
+  .card-list {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
   .button:focus {

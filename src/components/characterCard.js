@@ -35,10 +35,9 @@ function CharacterCard(props) {
                     <p><small>STATUS: {character.status}</small></p>
                     <p><small>SEASONS: {character.appearance?character.appearance.toString():null}</small></p>
                     <p><small>PORTRAYED BY: {character.portrayed}</small></p>
-                    {console.log(quotes)}
                     {quotes.length>0?<h2>QUOTES:</h2>:null}
                     {quotes.length>0?quotes.map((quote) => {
-                        return <h3>{quote.quote}</h3>
+                        return <h3 key={quote.quote_id}>{quote.quote}</h3>
                     }):null}
                     <div className="hyperlink"><Link to={{pathname: `/`}}><h2>RETURN TO MAIN SCREEN</h2></Link></div>
                 </div>
